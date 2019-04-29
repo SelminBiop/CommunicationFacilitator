@@ -3,7 +3,7 @@ from nltk.corpus import stopwords
 from symspellpy.symspellpy import SymSpell, Verbosity
 
 negative_words_path = "data/negative_words_fr.csv"
-frequency_dict_path = "data/fr_full.txt"
+frequency_dict_path = "data/fr_50k.txt"
 
 def is_text_polite(text):
     #tokens = nltk.word_tokenize(text, language='french')
