@@ -1,5 +1,6 @@
 import pandas as pd
 from nltk.corpus import stopwords
+from unidecode import unidecode
 from symspellpy.symspellpy import SymSpell, Verbosity
 
 negative_words_path = "data/negative_words_fr.csv"
@@ -9,6 +10,7 @@ def is_text_polite(text):
     #tokens = nltk.word_tokenize(text, language='french')
     tokens = text.split(" ")
     useful_tokens = [token for token in tokens if token not in stopwords.words('french')]
+    print(useful_tokens)
     neg_words = pd.read_csv(negative_words_path)
     polite = True
     corrected_tokens = []
@@ -27,6 +29,7 @@ def is_text_polite(text):
     max_edit_distance_lookup = 2
 
     for token in useful_tokens:
+        token = unidecode.unidecode(token.lower())
         suggestions = sym_spell.lookup(token, suggestion_verbosity, max_edit_distance_lookup)
         corrected_tokens.append(suggestions[0].term if len(suggestions) > 0 else token)
         if token in neg_words['Word'].values:
