@@ -10,8 +10,11 @@ def evaluate():
     input_data = request.json
     text_to_evaluate = input_data["text"]
 
+    corrected_text, is_polite = is_text_polite(text_to_evaluate)
+
     output_data = {
-        "is_polite":is_text_polite(text_to_evaluate)
+        "is_polite":is_polite,
+        "corrected_text":corrected_text
     }
     response = json.dumps(output_data)
 
