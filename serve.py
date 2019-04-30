@@ -13,7 +13,7 @@ def is_text_polite(text):
     corrected_tokens = []
 
     for token in tokens:
-        token = token.lemma_
+        #token = token.lemma_
         corrected_tokens.append(token)
         if token in neg_words['Word'].values:
             polite = False
