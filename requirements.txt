@@ -4,4 +4,4 @@ spacy
 pandas
 symspellpy
 unidecode
-https://github.com/explosion/spacy-models/releases//tag/fr_core_news_sm-2.1.0
+https://github.com/explosion/spacy-models/releases//tag/fr_core_news_sm-2.1.0/fr_core_news_sm-2.1.0.tar.gz
