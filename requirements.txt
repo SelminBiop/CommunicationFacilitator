@@ -4,3 +4,4 @@ spacy
 pandas
 symspellpy
 unidecode
+fr_core_news_sm

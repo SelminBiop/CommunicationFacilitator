@@ -1,5 +1,5 @@
 import pandas as pd
-import spacy
+import fr_core_news_sm
 from unidecode import unidecode
 from symspellpy.symspellpy import SymSpell, Verbosity
 
@@ -8,7 +8,7 @@ frequency_dict_path = "data/fr_50k.txt"
 
 def is_text_polite(text):
     #tokens = nltk.word_tokenize(text, language='french')
-    sp = spacy.load('fr_core_news_sm')
+    sp = fr_core_news_sm.load()
     tokens = sp(text)
     #useful_tokens = [token for token in tokens if token not in stopwords.words('french')]
 
