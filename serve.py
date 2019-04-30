@@ -29,7 +29,7 @@ def is_text_polite(text):
     max_edit_distance_lookup = 2
 
     for token in useful_tokens:
-        token = unidecode.unidecode(token.lower())
+        token = unidecode(token.lower())
         suggestions = sym_spell.lookup(token, suggestion_verbosity, max_edit_distance_lookup)
         corrected_tokens.append(suggestions[0].term if len(suggestions) > 0 else token)
         if token in neg_words['Word'].values:
