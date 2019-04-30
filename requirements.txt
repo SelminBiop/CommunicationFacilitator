@@ -1,6 +1,6 @@
 gunicorn
 flask
-nltk
+spacy
 pandas
 symspellpy
 unidecode
