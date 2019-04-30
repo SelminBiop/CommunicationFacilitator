@@ -20,6 +20,6 @@ def evaluate():
         "corrected_text":corrected_text,
         "original_text":text_to_evaluate
     }
-    response = json.dumps(output_data)
+    response = json.dumps(output_data, ensure_ascii=False)
 
     return response
