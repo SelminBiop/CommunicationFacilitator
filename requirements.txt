@@ -2,5 +2,5 @@ gunicorn
 flask
 spacy
 pandas
-unidecode
+hunspell
 https://github.com/explosion/spacy-models/releases/download/fr_core_news_sm-2.1.0/fr_core_news_sm-2.1.0.tar.gz#fr_core_news_sm
