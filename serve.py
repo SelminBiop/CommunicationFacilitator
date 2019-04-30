@@ -8,13 +8,13 @@ def is_text_polite(text):
     tokens = sp(text)
     #useful_tokens = [token for token in tokens if token not in stopwords.words('french')]
 
-    neg_words = pd.read_csv(negative_words_path)
+    #neg_words = pd.read_csv(negative_words_path)
     polite = True
     corrected_tokens = []
 
     for token in tokens:
         word = token.text
         corrected_tokens.append(word)
-        if word in neg_words['Word'].values:
-            polite = False
+        #if word in neg_words['Word'].values:
+            #polite = False
     return corrected_tokens, polite
