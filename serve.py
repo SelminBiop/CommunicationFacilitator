@@ -17,8 +17,8 @@ def is_text_polite(text):
 
     for token in tokens:
         word = token.text.lower()
-        suggestions = app.sym_spell.lookup(word, suggestion_verbosity, max_edit_distance_lookup)
-        corrected_tokens.append(word if len(suggestions) < 1 else suggestions[0].term)
+        #suggestions = app.sym_spell.lookup(word, suggestion_verbosity, max_edit_distance_lookup)
+        corrected_tokens.append(word) #if len(suggestions) < 1 else suggestions[0].term)
         #if word in neg_words['Word'].values:
             #polite = False
     return corrected_tokens, polite
