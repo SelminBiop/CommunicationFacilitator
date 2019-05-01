@@ -22,7 +22,7 @@ def is_text_polite(text):
     term_index = 0
     count_index = 1
 
-    sym_spell.create_dictionary(fr_dict_path, term_index, count_index)
+    sym_spell.load_dictionary(fr_dict_path, term_index, count_index)
 
     max_edit_distance_lookup = 2
     suggestion_verbosity = Verbosity.CLOSEST    
