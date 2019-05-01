@@ -6,7 +6,7 @@ negative_words_path = "data/negative_words_fr.csv"
 sp = fr_core_news_sm.load()
 
 def is_text_polite(text):    
-    tokens = text.split(" ")
+    tokens = sp(text)
     useful_tokens = [token for token in tokens if not token.is_stop]
 
     neg_words = pd.read_csv(negative_words_path)
