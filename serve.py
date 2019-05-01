@@ -1,6 +1,6 @@
 import pandas as pd
-import sys
 import fr_core_news_sm
+import hunspell
 
 negative_words_path = "data/negative_words_fr.csv"
 
@@ -15,8 +15,6 @@ def is_text_polite(text):
 
     for token in tokens:
         word = token.text.lower()
-        print(token.lemma_)
-        sys.stdout.flush()
         corrected_tokens.append(word)
         #if word in neg_words['Word'].values:
             #polite = False
