@@ -1,10 +1,8 @@
 import pandas as pd
+import sys
 import fr_core_news_sm
-import hunspell
 
 negative_words_path = "data/negative_words_fr.csv"
-fr_dict_path = "data/fr-classique.dic"
-fr_aff_path = "data/fr-classique.aff"
 
 def is_text_polite(text):
     sp = fr_core_news_sm.load()
@@ -15,11 +13,11 @@ def is_text_polite(text):
     polite = True
     corrected_tokens = []
 
-    hobj = hunspell.Hunspell(fr_dict_path, fr_aff_path)
-
     for token in tokens:
         word = token.text.lower()
-        corrected_tokens.append(word if hobj.spell(word) else hobj.suggest(word)[0])
+        print(token.lemma_)
+        sys.stdout.flush()
+        corrected_tokens.append(word)
         #if word in neg_words['Word'].values:
             #polite = False
     return corrected_tokens, polite
