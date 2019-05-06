@@ -1,4 +1,3 @@
-import pandas as pd
 import fr_core_news_sm
 from pattern.fr import sentiment
 
