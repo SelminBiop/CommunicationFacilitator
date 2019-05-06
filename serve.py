@@ -1,4 +1,5 @@
 import fr_core_news_sm
+import sys
 from pattern.fr import sentiment
 
 negative_words_path = "data/negative_words_fr.csv"
@@ -18,6 +19,10 @@ def is_text_polite(text):
 
     pol_sum = 0
     for sentence in sentences:
-        pol_sum += sentiment(sentence)[0]
+        polarity = sentiment(sentence)[0]
+        pol_sum += polarity
+        sys.stdout.write(sentence)
+        sys.stdout.write(str(polarity))
+        sys.stdout.flush()
         
     return corrected_tokens, pol_sum >= 0
