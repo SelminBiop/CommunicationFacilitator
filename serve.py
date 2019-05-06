@@ -9,14 +9,16 @@ sp = fr_core_news_sm.load()
 def is_text_polite(text):
     tokens = sp(text)
     useful_tokens = [token for token in tokens if not token.is_stop]
+    sentences = list(tokens.sents)
 
-    neg_words = pd.read_csv(negative_words_path)
-    polite = True
     corrected_tokens = []   
 
     for token in useful_tokens:
         word = token.lemma_
         corrected_tokens.append(word)
-        if word in neg_words['Word'].values:
-            polite = False
-    return corrected_tokens, polite
+
+    pol_sum = 0
+    for sentence in sentences:
+        pol_sum += sentiment(sentence)[0]
+        
+    return corrected_tokens, pol_sum >= 0
