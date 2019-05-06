@@ -1,11 +1,12 @@
 import pandas as pd
 import fr_core_news_sm
+from pattern.fr import sentiment
 
 negative_words_path = "data/negative_words_fr.csv"
 
 sp = fr_core_news_sm.load()
 
-def is_text_polite(text):    
+def is_text_polite(text):
     tokens = sp(text)
     useful_tokens = [token for token in tokens if not token.is_stop]
 
