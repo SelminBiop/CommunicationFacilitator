@@ -19,9 +19,9 @@ def is_text_polite(text):
 
     pol_sum = 0
     for sentence in sentences:
-        polarity = sentiment(sentence)[0]
+        polarity = sentiment(sentence.text)[0]
         pol_sum += polarity
-        sys.stdout.write(sentence)
+        sys.stdout.write(sentence.text)
         sys.stdout.write(str(polarity))
         sys.stdout.flush()
         
