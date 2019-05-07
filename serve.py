@@ -10,7 +10,7 @@ db_url = os.environ['DATABASE_URL']
 def is_text_polite(text):    
 
     document = types.Document(content=text, type=enums.Document.Type.PLAIN_TEXT)
-    annotations = client.analyze_sentiment(document=document, encodingType=enums.EncodingType.UTF32)
+    annotations = client.analyze_sentiment(document=document, encoding_type=enums.EncodingType.UTF32)
 
     score = annotations.document_sentiment.score
     magnitude = annotations.document_sentiment.magnitude
