@@ -2,8 +2,10 @@ from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
 import sys
+import os
 
 client = language.LanguageServiceClient()
+db_url = os.environ['DATABASE_URL']
 
 def is_text_polite(text):    
 
@@ -15,7 +17,7 @@ def is_text_polite(text):
 
     for index, sentence in enumerate(annotations.sentences):
         sentence_sentiment = sentence.sentiment.score
-        sys.stdout.write('Sentence {} has a sentiment score of {}'.format(index, sentence_sentiment))
+        sys.stdout.write('Sentence {} has a sentiment score of {}'.format(sentence.text, sentence_sentiment))
         sys.stdout.flush()
     
     sys.stdout.write('Overall Sentiment: score of {} with magnitude of {}'.format(score, magnitude))
