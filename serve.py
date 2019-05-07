@@ -1,16 +1,24 @@
-def is_text_polite(text):
-    tokens = sp(text)
-    useful_tokens = [token for token in tokens if not token.is_stop]
-    sentences = list(tokens.sents)
+from google.cloud import language
+from google.cloud.language import enums
+from google.cloud.language import types
+import sys
 
-    corrected_tokens = []   
+client = language.LanguageServiceClient()
 
-    for token in useful_tokens:
-        word = token.lemma_
-        corrected_tokens.append(word)
+def is_text_polite(text):    
 
-    pol_sum = 0
-    for sentence in sentences:
-        pol_sum += polarity
+    document = types.Document(content=text, type=enums.Document.Type.PLAIN_TEXT)
+    annotations = client.analyze_sentiment(document=document)
+
+    score = annotations.document_sentiment.score
+    magnitude = annotations.document_sentiment.magnitude
+
+    for index, sentence in enumerate(annotations.sentences):
+        sentence_sentiment = sentence.sentiment.score
+        sys.stdout.write('Sentence {} has a sentiment score of {}'.format(index, sentence_sentiment))
+        sys.stdout.flush()
+    
+    sys.stdout.write('Overall Sentiment: score of {} with magnitude of {}'.format(score, magnitude))
+    sys.stdout.flush()
         
-    return corrected_tokens, pol_sum >= 0
+    return text, score >= 0
