@@ -20,9 +20,11 @@ def is_text_polite(text):
     pol_sum = 0
     for sentence in sentences:
         polarity = sentiment(sentence.text)[0]
+        subjectivity = sentiment(sentence.text)[1]
         pol_sum += polarity
-        sys.stdout.write(sentence.text)
-        sys.stdout.write(str(polarity))
+        sys.stdout.write(sentence.text + '\n')
+        sys.stdout.write('Polarity : ' + str(polarity) + '\n')
+        sys.stdout.write('Subjectivity : ' + str(subjectivity) + '\n')
         sys.stdout.flush()
         
     return corrected_tokens, pol_sum >= 0
