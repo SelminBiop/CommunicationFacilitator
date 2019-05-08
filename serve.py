@@ -1,6 +1,7 @@
 from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
+import psycopg2
 import sys
 import os
 
@@ -17,6 +18,20 @@ def is_text_polite(text):
 
     sum_score = 0
 
+    conn = psycopg2.connect(host=db_url)
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        CREATE TABLE sentences (
+            sentence_id SERIAL PRIMARY KEY,
+            sentence VARCHAR(255),
+            sentiment FLOAT(3),
+            magnitude FLOAT(3)
+        )
+        """
+    )
+
     for index, sentence in enumerate(annotations.sentences):
         sentence_sentiment = sentence.sentiment.score
         sentence_text = sentence.text.content
@@ -26,5 +41,7 @@ def is_text_polite(text):
     
     sys.stdout.write('Overall Sentiment: score of {} with magnitude of {}'.format(score, magnitude))
     sys.stdout.flush()
-        
+    
+    conn.close()
+
     return text, sum_score >= 0
