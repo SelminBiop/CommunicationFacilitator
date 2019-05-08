@@ -34,6 +34,8 @@ def is_text_polite(text):
         )
         """
     )
+    cur.close()
+    conn.commit()
 
     for index, sentence in enumerate(annotations.sentences):
         sentence_sentiment = sentence.sentiment.score
