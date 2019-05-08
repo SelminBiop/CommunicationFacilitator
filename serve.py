@@ -6,7 +6,10 @@ import sys
 import os
 
 client = language.LanguageServiceClient()
-db_url = os.environ['DATABASE_URL']
+db_host = os.environ['DATABASE_HOST']
+db_user = os.environ['DATABASE_USER']
+db_pwd = os.environ['DATABASE_PWD']
+db_name = os.environ['DATABASE_NAME']
 
 def is_text_polite(text):    
 
@@ -18,7 +21,7 @@ def is_text_polite(text):
 
     sum_score = 0
 
-    conn = psycopg2.connect(host=db_url)
+    conn = psycopg2.connect(host=db_host, database=db_name, user=db_name, password=db_pwd)
     cur = conn.cursor()
 
     cur.execute(
