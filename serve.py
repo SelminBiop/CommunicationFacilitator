@@ -21,7 +21,7 @@ def is_text_polite(text):
 
     sum_score = 0
 
-    conn = psycopg2.connect(host=db_host, database=db_name, user=db_name, password=db_pwd)
+    conn = psycopg2.connect(host=db_host, database=db_name, user=db_user, password=db_pwd)
     cur = conn.cursor()
 
     cur.execute(
