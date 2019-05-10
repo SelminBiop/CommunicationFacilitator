@@ -22,12 +22,15 @@ def is_text_polite(text):
     sum_score = 0
 
     conn = psycopg2.connect(host=db_host, database=db_name, user=db_user, password=db_pwd)
-    cur = conn.cursor()       
+    cur = conn.cursor()
+
+    analyzed_text = []
 
     for index, sentence in enumerate(annotations.sentences):
         sentence_sentiment = sentence.sentiment.score
         sentence_text = sentence.text.content
         sum_score += sentence_sentiment
+        analyzed_text.append((sentence_text, sentence_sentiment))
         cur.execute(
             """
             INSERT INTO sentences (sentence, sentiment, magnitude)
@@ -44,4 +47,4 @@ def is_text_polite(text):
     conn.commit()
     conn.close()
 
-    return text, sum_score >= 0
+    return analyzed_text, sum_score >= 0
