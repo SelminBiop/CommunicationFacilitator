@@ -1,4 +1,5 @@
 import json
+from database import Database
 from flask import Flask, request
 from serve import is_text_polite
 
@@ -10,7 +11,12 @@ def evaluate():
     input_data = request.json
     text_to_evaluate = input_data["text"]
 
-    analyzed_text, is_polite = is_text_polite(text_to_evaluate)
+    email_database = Database()
+    email_database.connect()
+
+    analyzed_text, is_polite = is_text_polite(text_to_evaluate, email_database)
+
+    email_database.close()
 
     output_data = {
         "is_polite":is_polite,
