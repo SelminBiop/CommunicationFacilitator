@@ -129,7 +129,7 @@ class Database:
                 score FLOAT(2),
                 magnitude FLOAT(2),
                 sentences Sentence[],
-                PRIMAREY KEY (receiver, sender, subject, received)
+                PRIMARY KEY (receiver, sender, subject, received)
             )
             """
         )
