@@ -15,7 +15,6 @@ def is_text_polite(text, email_database):
 
     sum_score = 0
 
-    email_database.create_sentence_type()
     email_database.create_email_table()
 
     analyzed_text = []
