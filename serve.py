@@ -21,7 +21,9 @@ def is_text_polite(text, email):
 
     conn = Database()
     conn.connect()
-    conn.insert_email_data(email)
+    conn.create_sentence_type()
+    conn.create_email_table()
+    #conn.insert_email_data(email)
     conn.close()
 
     for sentence in annotations.sentences:

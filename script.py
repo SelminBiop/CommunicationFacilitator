@@ -12,18 +12,14 @@ def evaluate():
     input_data = request.json
     text_to_evaluate = input_data["text"]
     sender = input_data["sender"]
-    receiver = input_data["receiver"]
     received_year = int(input_data["received_year"])
     received_month = int(input_data["received_month"])
     received_date = int(input_data["received_date"])
-    subject = input_data["subject"]
 
     email = EmailSentiment()
 
-    email.receiver = receiver
     email.sender = sender
     email.received = datetime.date(received_year, received_month, received_date)
-    email.subject = subject
 
     analyzed_text, is_polite = is_text_polite(text_to_evaluate, email)
 

@@ -56,14 +56,12 @@ class Database:
             """
             CREATE TABLE Emails (
                 email_id SERIAL,
-                receiver VARCHAR(255),
                 sender VARCHAR(255),
-                subject VARCHAR(255),
                 received DATE,
                 score FLOAT(2),
                 magnitude FLOAT(2),
                 sentences Sentence[],
-                PRIMARY KEY (receiver, sender, subject, received)
+                PRIMARY KEY (sender, received)
             )
             """
         )
