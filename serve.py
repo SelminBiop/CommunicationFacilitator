@@ -23,8 +23,6 @@ def is_text_polite(text, email):
     try:
         conn = Database()
         conn.connect()
-        conn.create_sentence_type()
-        conn.create_email_table()
         conn.insert_email_data(email)
     except (Exception, psycopg2.DatabaseError) as error:
         sys.stdout.write(str(error))

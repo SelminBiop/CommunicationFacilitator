@@ -24,7 +24,7 @@ class Database:
             insert_sentences_value.append((sentence.text.content, sentence.sentiment.score, sentence.sentiment.magnitude))
         cur.execute(
             """
-            INSERT INTO Emails (sender, received, score, magnitude, sentences)
+            INSERT INTO Emails (sender, subject, received, score, magnitude, sentences)
             VALUES(%s, %s, %s, %s, %s, %s::Sentence[])
             """
             ,(email.sender, email.subject, email.received, email.score, email.magnitude, insert_sentences_value)
