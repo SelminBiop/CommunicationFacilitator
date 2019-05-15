@@ -19,15 +19,13 @@ class Database:
 
     def insert_email_data(self, email):
         cur = self.conn.cursor()
-        insert_sentences_value = """{"""
+        insert_sentences_value = []
         for sentence in email.sentences:
-            insert_sentences_value += """ROW('{}', {}, {}),""".format(sentence.text.content, sentence.sentiment.score, sentence.sentiment.magnitude)
-        insert_sentences_value = insert_sentences_value[:-1]
-        insert_sentences_value += """}"""
+            insert_sentences_value.append((sentence.text.content, sentence.sentiment.score, sentence.sentiment.magnitude))
         cur.execute(
             """
             INSERT INTO Emails (sender, received, score, magnitude, sentences)
-            VALUES(%s, %s, %s, %s, %s)
+            VALUES(%s, %s, %s, %s, %s::Sentence[])
             """
             ,(email.sender, email.received, email.score, email.magnitude, insert_sentences_value)
         )
