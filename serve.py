@@ -19,10 +19,14 @@ def is_text_polite(text, email):
 
     analyzed_text = []
 
-    conn = Database()
-    conn.connect()
-    conn.insert_email_data(email)
-    conn.close()
+    try:
+        conn = Database()
+        conn.connect()
+        conn.insert_email_data(email)
+    except (Exception, psycopg2.DatabaseError) as error:
+        sys.stdout.write(str(error))
+    finally:
+        conn.close()
 
     for sentence in annotations.sentences:
         sentence_sentiment = sentence.sentiment.score
