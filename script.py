@@ -1,6 +1,6 @@
 import json
 import datetime
-from email import Email
+from emailSentiment import EmailSentiment
 from flask import Flask, request
 from serve import is_text_polite
 
@@ -18,7 +18,7 @@ def evaluate():
     received_date = int(input_data["received_date"])
     subject = input_data["subject"]
 
-    email = Email()
+    email = EmailSentiment()
 
     email.receiver = receiver
     email.sender = sender

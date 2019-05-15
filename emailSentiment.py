@@ -1,6 +1,6 @@
 import datetime
 
-class Email:
+class EmailSentiment:
 
     def __init__(self, receiver="", sender="", subject="", received=datetime.date(2019, 1, 1), score=0, magnitude=0, sentences=[]):
         self._receiver = receiver
