@@ -1,5 +1,6 @@
 import json
-from database import Database
+import datetime
+from email import Email
 from flask import Flask, request
 from serve import is_text_polite
 
@@ -10,13 +11,21 @@ app.config['DEBUG'] = True
 def evaluate():
     input_data = request.json
     text_to_evaluate = input_data["text"]
+    sender = input_data["sender"]
+    receiver = input_data["receiver"]
+    received_year = int(input_data["received_year"])
+    received_month = int(input_data["received_month"])
+    received_date = int(input_data["received_date"])
+    subject = input_data["subject"]
 
-    email_database = Database()
-    email_database.connect()
+    email = Email()
 
-    analyzed_text, is_polite = is_text_polite(text_to_evaluate, email_database)
+    email.receiver = receiver
+    email.sender = sender
+    email.received = datetime.date(received_year, received_month, received_date)
+    email.subject = subject
 
-    email_database.close()
+    analyzed_text, is_polite = is_text_polite(text_to_evaluate, email)
 
     output_data = {
         "is_polite":is_polite,
