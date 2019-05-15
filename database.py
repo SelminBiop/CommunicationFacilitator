@@ -25,9 +25,9 @@ class Database:
         cur.execute(
             """
             INSERT INTO Emails (sender, received, score, magnitude, sentences)
-            VALUES(%s, %s, %s, %s, %s::Sentence[])
+            VALUES(%s, %s, %s, %s, %s, %s::Sentence[])
             """
-            ,(email.sender, email.received, email.score, email.magnitude, insert_sentences_value)
+            ,(email.sender, email.subject, email.received, email.score, email.magnitude, insert_sentences_value)
         )
         cur.close()
         self.conn.commit()
@@ -55,11 +55,12 @@ class Database:
             CREATE TABLE Emails (
                 email_id SERIAL,
                 sender VARCHAR(255),
+                subject VARCHAR(255),
                 received DATE,
                 score FLOAT(2),
                 magnitude FLOAT(2),
                 sentences Sentence[],
-                PRIMARY KEY (sender, received)
+                PRIMARY KEY (sender, subject, received)
             )
             """
         )

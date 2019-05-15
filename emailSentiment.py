@@ -2,8 +2,9 @@ import datetime
 
 class EmailSentiment:
 
-    def __init__(self, sender="", received=datetime.date(2019, 1, 1), score=0, magnitude=0, sentences=[]):
+    def __init__(self, sender="", subject="", received=datetime.date(2019, 1, 1), score=0, magnitude=0, sentences=[]):
         self._sender = sender
+        self._subject = subject
         self._received = received
         self._score = score
         self._magnitude = magnitude
@@ -16,6 +17,14 @@ class EmailSentiment:
     @sender.setter
     def sender(self, value):
         self._sender = value
+
+    @property
+    def subject(self):
+        return self._subject
+
+    @subject.setter
+    def subject(self, value):
+        self._subject = value
 
     @property
     def received(self):
