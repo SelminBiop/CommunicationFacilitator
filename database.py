@@ -21,15 +21,15 @@ class Database:
         cur = self.conn.cursor()
         insert_sentences_value = """ARRAY ["""
         for sentence in email.sentences:
-            insert_sentences_value += """ROW(%s, %s, %s),""",(sentence.text.content, sentence.sentiment.score, sentence.sentiment.magnitude)
+            insert_sentences_value += """ROW({}, {}, {}),""".format(sentence.text.content, sentence.sentiment.score, sentence.sentiment.magnitude)
         insert_sentences_value = insert_sentences_value[:-1]
         insert_sentences_value += """]"""
         cur.execute(
             """
             INSERT INTO Emails (receiver, sender, subject, received, score, magnitude, sentences)
-            VALUES(%s, %s, %s, %s, %s, %s, %s)
-            """,
-            (email.receiver, email.sender, email.subject, email.received, email.score, email.score, email.magnitude, insert_sentences_value)
+            VALUES({}, {}, {}, {}, {}, {}, {})
+            """
+            .format(email.receiver, email.sender, email.subject, email.received, email.score, email.score, email.magnitude, insert_sentences_value)
         )
         cur.close()
         self.conn.commit()
