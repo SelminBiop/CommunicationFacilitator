@@ -27,9 +27,9 @@ class Database:
         cur.execute(
             """
             INSERT INTO Emails (sender, received, score, magnitude, sentences)
-            VALUES({}, {}, {}, {}, {}, {}, {})
+            VALUES({}, {}, {}, {}, {})
             """
-            .format(email.sender, email.received, email.score, email.score, email.magnitude, insert_sentences_value)
+            .format(email.sender, email.received, email.score, email.magnitude, insert_sentences_value)
         )
         cur.close()
         self.conn.commit()
