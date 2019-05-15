@@ -26,10 +26,10 @@ class Database:
         insert_sentences_value += """]"""
         cur.execute(
             """
-            INSERT INTO Emails (receiver, sender, subject, received, score, magnitude, sentences)
+            INSERT INTO Emails (sender, received, score, magnitude, sentences)
             VALUES({}, {}, {}, {}, {}, {}, {})
             """
-            .format(email.receiver, email.sender, email.subject, email.received, email.score, email.score, email.magnitude, insert_sentences_value)
+            .format(email.sender, email.received, email.score, email.score, email.magnitude, insert_sentences_value)
         )
         cur.close()
         self.conn.commit()
