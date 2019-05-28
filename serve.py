@@ -1,11 +1,12 @@
 from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
-from database import Database
-import psycopg2
+from modelDatabase import ModelDatabase
 import sys
 
 client = language.LanguageServiceClient()
+db = ModelDatabase()
+db.connect()
 
 def is_text_polite(text, email):    
 
@@ -19,15 +20,7 @@ def is_text_polite(text, email):
     sum_score = 0
 
     analyzed_text = []
-
-    try:
-        conn = Database()
-        conn.connect()
-        conn.insert_email_data(email)
-    except (Exception, psycopg2.DatabaseError) as error:
-        sys.stdout.write(str(error))
-    finally:
-        conn.close()
+    db.insert_email_data(email)
 
     for sentence in annotations.sentences:
         sentence_sentiment = sentence.sentiment.score
