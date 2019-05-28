@@ -34,6 +34,10 @@ class ModelDatabase:
         database.bind(provider='postgres', host=db_host, database=db_name, user=db_user, password=db_pwd)
         database.generate_mapping(create_tables=True)
 
+    def execute_in_session(self, action):
+        with db_session:
+            action()
+
     @db_session
     def insert_email_data(self, email):
         inserted_email = Email(sender=email.sender, subject=email.subject, received_date=email.received, score=email.score, magnitude=email.magnitude)
@@ -43,6 +47,4 @@ class ModelDatabase:
     
     @db_session
     def retrieve_email_data(self, email):
-        email = Email[email.sender, email.subject, email.received]
-        email.sentences = email.sentences
-        return email
+        return Email[email.sender, email.subject, email.received]
