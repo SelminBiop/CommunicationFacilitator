@@ -18,7 +18,7 @@ class ModelDatabase:
             score = Optional(float)
             magnitude = Optional(float)
             sentences = Set('Sentence')
-            PrimaryKey(id, sender, subject, received_date)
+            PrimaryKey(sender, subject, received_date)
     
         class Sentence(database.Entity):
             id = PrimaryKey(UUID, auto=True)
