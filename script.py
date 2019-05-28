@@ -23,12 +23,11 @@ def evaluate():
     email.subject = subject
     email.received = datetime.date(received_year, received_month, received_date)
 
-    analyzed_text, is_polite, email_id = is_text_polite(text_to_evaluate, email)
+    analyzed_text, is_polite = is_text_polite(text_to_evaluate, email)
 
     output_data = {
         "is_polite":is_polite,
-        "analyzed_text":analyzed_text,
-        "email_id":email_id
+        "analyzed_text":analyzed_text
     }
     response = json.dumps(output_data, ensure_ascii=False)
 
