@@ -9,23 +9,23 @@ db_pwd = os.environ['DATABASE_PWD']
 db_name = os.environ['DATABASE_NAME']
 database = Database()
 
+class Email(database.Entity):
+    sender = Required(str)
+    subject = Required(str)
+    received_date = Required(date)
+    score = Optional(float)
+    magnitude = Optional(float)
+    sentences = Set('Sentence')
+    PrimaryKey(sender, subject, received_date)
+
+class Sentence(database.Entity):
+    id = PrimaryKey(UUID, auto=True)
+    email = Required('Email')
+    text = Required(str)
+    sentiment = Required(float)
+    magnitude = Optional(float) 
+
 class ModelDatabase:
-
-    class Email(database.Entity):
-        sender = Required(str)
-        subject = Required(str)
-        received_date = Required(date)
-        score = Optional(float)
-        magnitude = Optional(float)
-        sentences = Set('Sentence')
-        PrimaryKey(sender, subject, received_date)
-
-    class Sentence(database.Entity):
-        id = PrimaryKey(UUID, auto=True)
-        email = Required('Email')
-        text = Required(str)
-        sentiment = Required(float)
-        magnitude = Optional(float) 
 
     def __init__(self, *args, **kwargs):        
         return super().__init__(*args, **kwargs)
@@ -34,8 +34,7 @@ class ModelDatabase:
         database.bind(provider='postgres', host=db_host, database=db_name, user=db_user, password=db_pwd)
         database.generate_mapping(create_tables=True)
 
-
-    @database_session
+    @db_session
     def insert_email_data(self, email):
         inserted_email = Email(sender=email.sender, subject=email.subject, received_date=email.received, score=email.score, magnitude=email.magnitude)
         for sentence in email.sentences:
