@@ -43,4 +43,6 @@ class ModelDatabase:
     
     @db_session
     def retrieve_email_data(self, email):
-        return Email[email.sender, email.subject, email.received]
+        email = Email[email.sender, email.subject, email.received]
+        email.sentences = email.sentences
+        return email
