@@ -7,25 +7,27 @@ db_host = os.environ['DATABASE_HOST']
 db_user = os.environ['DATABASE_USER']
 db_pwd = os.environ['DATABASE_PWD']
 db_name = os.environ['DATABASE_NAME']
+database = Database()
 
 class ModelDatabase:
-    def __init__(self, *args, **kwargs):
-        database = Database()
-        class Email(database.Entity):
-            sender = Required(str)
-            subject = Required(str)
-            received_date = Required(date)
-            score = Optional(float)
-            magnitude = Optional(float)
-            sentences = Set('Sentence')
-            PrimaryKey(sender, subject, received_date)
-    
-        class Sentence(database.Entity):
-            id = PrimaryKey(UUID, auto=True)
-            email = Required(Email)
-            text = Required(str)
-            sentiment = Required(float)
-            magnitude = Optional(float) 
+
+    class Email(database.Entity):
+        sender = Required(str)
+        subject = Required(str)
+        received_date = Required(date)
+        score = Optional(float)
+        magnitude = Optional(float)
+        sentences = Set('Sentence')
+        PrimaryKey(sender, subject, received_date)
+
+    class Sentence(database.Entity):
+        id = PrimaryKey(UUID, auto=True)
+        email = Required(Email)
+        text = Required(str)
+        sentiment = Required(float)
+        magnitude = Optional(float) 
+
+    def __init__(self, *args, **kwargs):        
         self.db = database
         return super().__init__(*args, **kwargs)
 
