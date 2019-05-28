@@ -28,15 +28,14 @@ class ModelDatabase:
         magnitude = Optional(float) 
 
     def __init__(self, *args, **kwargs):        
-        self.db = database
         return super().__init__(*args, **kwargs)
 
     def connect(self):
-        self.db.bind(provider='postgres', host=db_host, database=db_name, user=db_user, password=db_pwd)
-        self.db.generate_mapping(create_tables=True)
+        database.bind(provider='postgres', host=db_host, database=db_name, user=db_user, password=db_pwd)
+        database.generate_mapping(create_tables=True)
 
 
-    @db_session
+    @database_session
     def insert_email_data(self, email):
         inserted_email = Email(sender=email.sender, subject=email.subject, received_date=email.received, score=email.score, magnitude=email.magnitude)
         for sentence in email.sentences:
