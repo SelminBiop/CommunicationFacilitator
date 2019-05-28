@@ -2,6 +2,7 @@ from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
 from modelDatabase import ModelDatabase
+from emailSentiment import EmailSentiment
 import sys
 
 client = language.LanguageServiceClient()
@@ -10,26 +11,31 @@ db.connect()
 
 def is_text_polite(text, email):    
 
-    document = types.Document(content=text, type=enums.Document.Type.PLAIN_TEXT)
-    annotations = client.analyze_sentiment(document=document, encoding_type=enums.EncodingType.UTF32)
-
-    email.score = annotations.document_sentiment.score
-    email.magnitude = annotations.document_sentiment.magnitude
-    email.sentences = annotations.sentences
-
     sum_score = 0
 
     analyzed_text = []
 
     try:
-        db.insert_email_data(email)
-    except:
-        sys.stdout.write('Insert email to database exception')
+        email = db.retrieve_email_data(email)
+    except:        
+        sys.stdout.write('Email not in database')
         sys.stdout.flush()
+        try:
+            db.insert_email_data(email)
+        except:
+            sys.stdout.write('Error adding email to database')
+            sys.stdout.flush()
+        finally:
+                document = types.Document(content=text, type=enums.Document.Type.PLAIN_TEXT)
+                annotations = client.analyze_sentiment(document=document, encoding_type=enums.EncodingType.UTF32)
 
-    for sentence in annotations.sentences:
-        sentence_sentiment = sentence.sentiment.score
-        sentence_text = sentence.text.content
+                email.score = annotations.document_sentiment.score
+                email.magnitude = annotations.document_sentiment.magnitude
+                email.sentences_from_google_nlp(annotations.sentences)
+
+    for sentence in email.sentences:
+        sentence_sentiment = sentence.sentiment
+        sentence_text = sentence.text
         sum_score += sentence_sentiment
         analyzed_text.append((sentence_text, sentence_sentiment))    
 

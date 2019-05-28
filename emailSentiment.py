@@ -57,3 +57,14 @@ class EmailSentiment:
     @sentences.setter
     def sentences(self, value):
         self._sentences = value
+
+    def sentences_from_google_nlp(self, google_sentences):
+        for sentence in google_sentences:
+            self._sentences.append(Sentence(sentence.text.content, sentence.sentiment.score, sentence.sentiment.magnitude))
+
+
+class Sentence():
+    def __init__(self, text, sentiment, magnitude):
+        self.text = text
+        self.sentiment = sentiment
+        self.magnitude = magnitude
