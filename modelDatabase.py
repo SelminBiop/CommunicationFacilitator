@@ -22,7 +22,7 @@ class ModelDatabase:
 
     class Sentence(database.Entity):
         id = PrimaryKey(UUID, auto=True)
-        email = Required(Email)
+        email = Required('Email')
         text = Required(str)
         sentiment = Required(float)
         magnitude = Optional(float) 
