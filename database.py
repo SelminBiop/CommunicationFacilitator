@@ -33,6 +33,38 @@ class Database:
         self.conn.commit()
 
 
+    def update_email_data(self, email):
+        cur = self.conn.cursor()
+        insert_sentences_value = []
+        for sentence in email.sentences:
+            insert_sentences_value.append((sentence.text.content, sentence.sentiment.score, sentence.sentiment.magnitude))
+        cur.execute(
+            """
+            UPDATE Emails 
+            SET sentences = %s::Sentence[]
+            WHERE sender = %s AND subject = %s AND received = %s
+            """
+            ,(insert_sentences_value, email.sender, email.subject, email.received)
+        )
+        cur.close()
+        self.conn.commit()
+
+
+    def update_sentence_score(self, email_id, sentence_index, score):
+        cur = self.conn.cursor()
+        insert_sentences_value = []
+        cur.execute(
+            """
+            UPDATE Emails 
+            SET sentences = %s::Sentence[]
+            WHERE sender = %s AND subject = %s AND received = %s
+            """
+            ,(insert_sentences_value, email.sender, email.subject, email.received)
+        )
+        cur.close()
+        self.conn.commit()
+
+
     def create_sentence_type(self):
         cur = self.conn.cursor()
         cur.execute(
