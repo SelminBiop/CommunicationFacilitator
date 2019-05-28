@@ -20,7 +20,9 @@ def is_text_polite(text, email):
     sum_score = 0
 
     analyzed_text = []
-    db.insert_email_data(email)
+    
+    try:
+        db.insert_email_data(email)
 
     for sentence in annotations.sentences:
         sentence_sentiment = sentence.sentiment.score
