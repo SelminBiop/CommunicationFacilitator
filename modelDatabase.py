@@ -10,26 +10,24 @@ db_name = os.environ['DATABASE_NAME']
 
 class ModelDatabase:
     def __init__(self, *args, **kwargs):
-        self.db = Database()
+        database = Database()
+        class Email(database.Entity):
+            sender = Required(str)
+            subject = Required(str)
+            received_date = Required(date)
+            score = Optional(float)
+            magnitude = Optional(float)
+            sentences = Set('Sentence')
+            PrimaryKey(id, sender, subject, received_date)
+    
+        class Sentence(database.Entity):
+            id = PrimaryKey(UUID, auto=True)
+            email = Required(Email)
+            text = Required(str)
+            sentiment = Required(float)
+            magnitude = Optional(float) 
+        self.db = database
         return super().__init__(*args, **kwargs)
-
-    
-    class Email(self.db.Entity):
-        sender = Required(str)
-        subject = Required(str)
-        received_date = Required(date)
-        score = Optional(float)
-        magnitude = Optional(float)
-        sentences = Set('Sentence')
-        PrimaryKey(id, sender, subject, received_date)
-    
-    class Sentence(self.db.Entity):
-        id = PrimaryKey(UUID, auto=True)
-        email = Required(Email)
-        text = Required(str)
-        sentiment = Required(float)
-        magnitude = Optional(float) 
-
 
     def connect(self):
         self.db.bind(provider='postgres', host=db_host, database=db_name, user=db_user, password=db_pwd)
