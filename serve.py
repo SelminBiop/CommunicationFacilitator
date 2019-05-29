@@ -24,7 +24,7 @@ def is_text_polite(text, email):
             email.score = annotations.document_sentiment.score
             email.magnitude = annotations.document_sentiment.magnitude
             email.sentences_from_google_nlp(annotations.sentences)
-            db.insert_email_data(email)
+            email = db.insert_email_data(email)
         except:
             sys.stdout.write('Error adding email to database')
             sys.stdout.flush()                

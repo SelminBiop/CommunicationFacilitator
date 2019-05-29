@@ -40,6 +40,7 @@ class ModelDatabase:
         inserted_email = Email(sender=email.sender, subject=email.subject, received_date=email.received, score=email.score, magnitude=email.magnitude)
         for sentence in email.sentences:
             Sentence(email=inserted_email, text=sentence.text, sentiment=sentence.sentiment, magnitude=sentence.magnitude)
+        return EmailSentiment(inserted_email)
     
     @db_session
     def retrieve_email_data(self, email):
