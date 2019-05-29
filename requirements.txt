@@ -1,2 +1,5 @@
 gunicorn
 flask
+google-cloud-language
+psycopg2
+pony
