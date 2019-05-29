@@ -30,14 +30,10 @@ def is_text_polite(text, email):
                 email.magnitude = annotations.document_sentiment.magnitude
                 email.sentences_from_google_nlp(annotations.sentences)
 
-    db.execute_in_session(action = compute_text_score(analyzed_text, sum_score, email.sentences))
-       
-    return analyzed_text, sum_score >= 0
-
-
-def compute_text_score(text, score, sentences):
-    for sentence in sentences:
+    for sentence in email.sentences:
         sentence_sentiment = sentence.sentiment
         sentence_text = sentence.text
         sum_score += sentence_sentiment
-        text.append((sentence_text, sentence_sentiment))    
+        analyzed_text.append((sentence_text, sentence_sentiment))
+       
+    return analyzed_text, sum_score >= 0

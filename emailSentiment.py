@@ -10,6 +10,16 @@ class EmailSentiment:
         self._magnitude = magnitude
         self._sentences = sentences
 
+    def __init__(self, email_db):
+        self._sender = email_db.sender
+        self._subject = email_db.subject
+        self._received = email_db.received_date
+        self._score = email_db.score
+        self._magnitude = email_db.magnitude
+        self._sentences = []
+        for sentence in email_db.sentences:
+            self._sentences.append(Sentence(sentence.text, sentence.sentiment, sentence.magnitude))
+
     @property
     def sender(self):
         return self._sender

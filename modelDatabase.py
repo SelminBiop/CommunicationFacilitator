@@ -2,6 +2,7 @@ import os
 from datetime import date
 from uuid import UUID, uuid4
 from pony.orm import *
+from emailSentiment import EmailSentiment
 
 db_host = os.environ['DATABASE_HOST']
 db_user = os.environ['DATABASE_USER']
@@ -34,17 +35,12 @@ class ModelDatabase:
         database.bind(provider='postgres', host=db_host, database=db_name, user=db_user, password=db_pwd)
         database.generate_mapping(create_tables=True)
 
-    def execute_in_session(self, action):
-        with db_session:
-            action()
-
     @db_session
     def insert_email_data(self, email):
         inserted_email = Email(sender=email.sender, subject=email.subject, received_date=email.received, score=email.score, magnitude=email.magnitude)
         for sentence in email.sentences:
             Sentence(email=inserted_email, text=sentence.text, sentiment=sentence.sentiment, magnitude=sentence.magnitude)
-
     
     @db_session
     def retrieve_email_data(self, email):
-        return Email[email.sender, email.subject, email.received]
+        return EmailSentiment(Email[email.sender, email.subject, email.received])
