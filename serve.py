@@ -38,11 +38,11 @@ def is_text_polite(text, email):
     return analyzed_text, sum_score >= 0
 
 
-    def update_sentence(sentence_id, sentiment):
-        try:
-            db.update_sentence_sentiment(sentence_id, sentiment)
-        except:
-            sys.stdout.write('Error updating sentence sentiment')
-            sys.stdout.flush()
-            return False
-        return True
+def update_sentence(sentence_id, sentiment):
+    try:
+        db.update_sentence_sentiment(sentence_id, sentiment)
+    except:
+        sys.stdout.write('Error updating sentence sentiment')
+        sys.stdout.flush()
+        return False
+    return True
