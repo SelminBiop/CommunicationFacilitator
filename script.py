@@ -2,7 +2,9 @@ import json
 import datetime
 from emailSentiment import EmailSentiment
 from flask import Flask, request
+from flask import Response
 from serve import is_text_polite
+from serve import update_sentence
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -29,7 +31,18 @@ def evaluate():
         "is_polite":is_polite,
         "analyzed_text":analyzed_text
     }
-    response = json.dumps(output_data, ensure_ascii=False)
+    js = json.dumps(output_data, ensure_ascii=False)
 
-    return response
+    resp = Response(js, status=200, mimetype='application/json')
 
+    return resp
+
+@app.route('/update', methods=['PUT'])
+def evaluate():
+    input_data = request.json
+    sentence_id = input_data["sentence_id"]
+    sentiment = input_data["sentiment"]
+
+    status = 200 if update_sentence(sentence_id, sentiment) else 400
+
+    return Response(status=status)

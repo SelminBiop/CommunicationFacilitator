@@ -45,3 +45,8 @@ class ModelDatabase:
     @db_session
     def retrieve_email_data(self, email):
         return EmailSentiment(Email[email.sender, email.subject, email.received])
+
+    @db_session
+    def update_sentence_sentiment(self, sentence_id, sentiment):
+        sentence = Sentence[sentence_id]
+        sentence.sentiment = sentiment

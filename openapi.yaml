@@ -24,3 +24,18 @@ paths:
           description: "Returns True if polite False if not"
           content: 
            application/json: {}
+  /update:
+    put:
+      description: "Updates a sentences score"
+
+      requestBody:
+        description: "Json with sentence id and new score"
+        required: true
+        content:
+          application/json: {}
+
+      responses:
+        '200':
+          description: "Returns True if polite False if not"
+          content: 
+           application/json: {}
