@@ -38,7 +38,7 @@ def evaluate():
     return resp
 
 @app.route('/update', methods=['PUT'])
-def evaluate():
+def update():
     input_data = request.json
     sentence_id = input_data["sentence_id"]
     sentiment = input_data["sentiment"]
