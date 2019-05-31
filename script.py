@@ -40,8 +40,8 @@ def evaluate():
 @app.route('/update', methods=['PUT'])
 def update():
     input_data = request.json
-    sentence_id = input_data["sentence_id"]
-    sentiment = input_data["sentiment"]
+    sentence_id = int(input_data["sentence_id"])
+    sentiment = float(input_data["sentiment"])
 
     status = 200 if update_sentence(sentence_id, sentiment) else 400
 
