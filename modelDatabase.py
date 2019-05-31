@@ -20,7 +20,7 @@ class Email(database.Entity):
     PrimaryKey(sender, subject, received_date)
 
 class Sentence(database.Entity):
-    id = PrimaryKey(UUID, auto=True)
+    id = PrimaryKey(int, auto=True)
     email = Required('Email')
     text = Required(str)
     sentiment = Required(float)
