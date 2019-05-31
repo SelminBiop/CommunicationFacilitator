@@ -30,10 +30,8 @@ def is_text_polite(text, email):
             sys.stdout.flush()                
 
     for sentence in email.sentences:
-        sentence_sentiment = sentence.sentiment
-        sentence_text = sentence.text
-        sum_score += sentence_sentiment
-        analyzed_text.append((sentence_text, sentence_sentiment))
+        sum_score += sentence.sentiment
+        analyzed_text.append((sentence.text, sentence.sentiment, sentence.id))
        
     return analyzed_text, sum_score >= 0
 

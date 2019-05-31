@@ -18,7 +18,8 @@ class EmailSentiment:
             self._score = email_db.score
             self._magnitude = email_db.magnitude
             self._sentences = []
-            for sentence in email_db.sentences:
+            sorted_sentences = sorted(email_db.sentences, key=lambda sentence: sentence.position)
+            for sentence in sorted_sentences:
                 self._sentences.append(Sentence(sentence.text, sentence.sentiment, sentence.magnitude, sentence.id))
 
     @property
