@@ -41,6 +41,7 @@ class ModelDatabase:
         inserted_email = Email(sender=email.sender, subject=email.subject, received_date=email.received, score=email.score, magnitude=email.magnitude)
         for index, sentence in enumerate(email.sentences):
             Sentence(email=inserted_email, text=sentence.text, sentiment=sentence.sentiment, magnitude=sentence.magnitude, position=index)
+        commit()
         return EmailSentiment(inserted_email)
     
     @db_session
