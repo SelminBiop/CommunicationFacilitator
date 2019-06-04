@@ -24,15 +24,23 @@ def is_text_polite(text, email):
             email.score = annotations.document_sentiment.score
             email.magnitude = annotations.document_sentiment.magnitude
             email.sentences_from_google_nlp(annotations.sentences)
-            db.insert_email_data(email)
+            email = db.insert_email_data(email)
         except:
             sys.stdout.write('Error adding email to database')
             sys.stdout.flush()                
 
     for sentence in email.sentences:
-        sentence_sentiment = sentence.sentiment
-        sentence_text = sentence.text
-        sum_score += sentence_sentiment
-        analyzed_text.append((sentence_text, sentence_sentiment))
+        sum_score += sentence.sentiment
+        analyzed_text.append((sentence.text, sentence.sentiment, sentence.id))
        
     return analyzed_text, sum_score >= 0
+
+
+def update_sentence(sentence_id, sentiment):
+    try:
+        db.update_sentence_sentiment(sentence_id, sentiment)
+    except:
+        sys.stdout.write('Error updating sentence sentiment')
+        sys.stdout.flush()
+        return False
+    return True

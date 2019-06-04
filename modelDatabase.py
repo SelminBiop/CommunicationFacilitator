@@ -20,10 +20,11 @@ class Email(database.Entity):
     PrimaryKey(sender, subject, received_date)
 
 class Sentence(database.Entity):
-    id = PrimaryKey(UUID, auto=True)
+    id = PrimaryKey(int, auto=True)
     email = Required('Email')
     text = Required(str)
     sentiment = Required(float)
+    position = Required(int)
     magnitude = Optional(float) 
 
 class ModelDatabase:
@@ -38,9 +39,16 @@ class ModelDatabase:
     @db_session
     def insert_email_data(self, email):
         inserted_email = Email(sender=email.sender, subject=email.subject, received_date=email.received, score=email.score, magnitude=email.magnitude)
-        for sentence in email.sentences:
-            Sentence(email=inserted_email, text=sentence.text, sentiment=sentence.sentiment, magnitude=sentence.magnitude)
+        for index, sentence in enumerate(email.sentences):
+            Sentence(email=inserted_email, text=sentence.text, sentiment=sentence.sentiment, magnitude=sentence.magnitude, position=index)
+        commit()
+        return EmailSentiment(inserted_email)
     
     @db_session
     def retrieve_email_data(self, email):
         return EmailSentiment(Email[email.sender, email.subject, email.received])
+
+    @db_session
+    def update_sentence_sentiment(self, sentence_id, sentiment):
+        sentence = Sentence[sentence_id]
+        sentence.sentiment = sentiment

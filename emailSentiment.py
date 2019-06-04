@@ -2,14 +2,6 @@ import datetime
 
 class EmailSentiment:
 
-    def __init__(self):
-        self._sender = ""
-        self._subject = ""
-        self._received = datetime.date(2019, 1, 1)
-        self._score = 0
-        self._magnitude = 0
-        self._sentences = []
-
     def __init__(self, sender="", subject="", received=datetime.date(2019, 1, 1), score=0, magnitude=0, sentences=[]):
         self._sender = sender
         self._subject = subject
@@ -26,8 +18,9 @@ class EmailSentiment:
             self._score = email_db.score
             self._magnitude = email_db.magnitude
             self._sentences = []
-            for sentence in email_db.sentences:
-                self._sentences.append(Sentence(sentence.text, sentence.sentiment, sentence.magnitude))
+            sorted_sentences = sorted(email_db.sentences, key=lambda sentence: sentence.position)
+            for sentence in sorted_sentences:
+                self._sentences.append(Sentence(sentence.text, sentence.sentiment, sentence.magnitude, sentence.id))
 
     @property
     def sender(self):
@@ -84,7 +77,8 @@ class EmailSentiment:
 
 
 class Sentence():
-    def __init__(self, text, sentiment, magnitude):
+    def __init__(self, text, sentiment, magnitude, id = None):
         self.text = text
         self.sentiment = sentiment
         self.magnitude = magnitude
+        self.id = id
