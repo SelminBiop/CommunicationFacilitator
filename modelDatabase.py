@@ -14,6 +14,7 @@ class Email(database.Entity):
     sender = Required(str)
     subject = Required(str)
     received_date = Required(date)
+    language = Optional(str)
     score = Optional(float)
     magnitude = Optional(float)
     sentences = Set('Sentence')
@@ -38,7 +39,7 @@ class ModelDatabase:
 
     @db_session
     def insert_email_data(self, email):
-        inserted_email = Email(sender=email.sender, subject=email.subject, received_date=email.received, score=email.score, magnitude=email.magnitude)
+        inserted_email = Email(sender=email.sender, subject=email.subject, received_date=email.received, score=email.score, magnitude=email.magnitude, language=email.language)
         for index, sentence in enumerate(email.sentences):
             Sentence(email=inserted_email, text=sentence.text, sentiment=sentence.sentiment, magnitude=sentence.magnitude, position=index)
         commit()

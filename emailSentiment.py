@@ -2,20 +2,13 @@ import datetime
 
 class EmailSentiment:
 
-    def __init__(self, sender="", subject="", received=datetime.date(2019, 1, 1), score=0, magnitude=0, sentences=[]):
-        self._sender = sender
-        self._subject = subject
-        self._received = received
-        self._score = score
-        self._magnitude = magnitude
-        self._sentences = sentences
-
     def __init__(self, email_db = None):
         if email_db is not None:
             self._sender = email_db.sender
             self._subject = email_db.subject
             self._received = email_db.received_date
             self._score = email_db.score
+            self._language = email_db.language
             self._magnitude = email_db.magnitude
             self._sentences = []
             sorted_sentences = sorted(email_db.sentences, key=lambda sentence: sentence.position)
@@ -53,6 +46,14 @@ class EmailSentiment:
     @score.setter
     def score(self, value):
         self._score = value
+
+    @property
+    def language(self):
+        return self._language
+
+    @language.setter
+    def language(self, value):
+        self._language = value
 
     @property
     def magnitude(self):

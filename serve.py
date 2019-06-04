@@ -23,6 +23,7 @@ def is_text_polite(text, email):
 
             email.score = annotations.document_sentiment.score
             email.magnitude = annotations.document_sentiment.magnitude
+            email.language = annotations.language
             email.sentences_from_google_nlp(annotations.sentences)
             email = db.insert_email_data(email)
         except:
